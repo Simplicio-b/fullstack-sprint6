@@ -3,21 +3,55 @@ package br.com.rchlo.service;
 import br.com.rchlo.domain.Color;
 import br.com.rchlo.domain.Product;
 import br.com.rchlo.domain.Size;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public class ProductSizesReportMain {
-    public static void main(String[] args) {
-        List<Product> products = List.of(ProductSizesReportMain.aJacket(), ProductSizesReportMain.aJacket());
+public class ProductColorsReportTest {
 
-        ProductSizesReport psr = new ProductSizesReport();
-        psr.report(products);
-        psr.all();
+    @Test
+    public void reportDeveRetornarUmaExecaoCasoProductsSejaNull() {
+        ProductColorsReport pcr = new ProductColorsReport();
 
+        List<Product> products = List.of(
+                aTShirt(),
+                aJacket()
+        );
+
+        Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () ->  pcr.report(null)
+        );
     }
 
-    public static Product aTShirt() {
+    @Test
+    public void reportDeveRetornarMapComAQtdePecasPorCor() {
+        ProductColorsReport pcr = new ProductColorsReport();
+        List<Product> products = List.of(
+                aTShirt(),
+                aJacket()
+        );
+
+        Map<Color, Integer> mapProductsColor = pcr.report(products);
+        Map<Color, Integer> mapProdctsColorExpect = new HashMap<>();
+
+        mapProdctsColorExpect.put(Color.BLUE, 1);
+        mapProdctsColorExpect.put(Color.GRAY, 0);
+        mapProdctsColorExpect.put(Color.GREEN, 0);
+        mapProdctsColorExpect.put(Color.PINK, 0);
+        mapProdctsColorExpect.put(Color.RED, 0);
+        mapProdctsColorExpect.put(Color.WHITE, 1);
+
+
+        Assertions.assertEquals(mapProdctsColorExpect, mapProductsColor);
+    }
+
+    public Product aTShirt() {
         return new Product(14124998L,
                 "Camiseta Infantil Manga Curta Super Mario",
                 "A Camiseta Infantil Manga Curta Super Mario é confeccionada em malha macia e possui decote careca, mangas curtas e padronagem do Super Mario. Aposte na peça na hora de compor visuais geek divertidos.",
@@ -30,7 +64,8 @@ public class ProductSizesReportMain {
                 "https://static.riachuelo.com.br/RCHLO/14124998004/portrait/cd948d80fe8a1fdc873f8dca1f3c4c468253bf1d.jpg",
                 Set.of(Size.SMALL, Size.MEDIUM));
     }
-    public static Product aJacket() {
+
+    public Product aJacket() {
         return new Product(13834193L,
                 "Jaqueta Puffer Juvenil Com Capuz Super Mario",
                 "A Jaqueta Puffer Juvenil Com Capuz Super Mario é confeccionada em material sintético. Possui estrutura ampla e modelo puffer, com capuz em pelúcia e bolsos frontais. Ideal para compor looks de inverno, mas sem perder o estilo. Combine com uma camiseta, calça jeans e tênis colorido.",
@@ -44,5 +79,3 @@ public class ProductSizesReportMain {
                 Set.of(Size.LARGE, Size.EXTRA_LARGE));
     }
 }
-
-

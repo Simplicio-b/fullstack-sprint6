@@ -21,6 +21,8 @@ public class ProductColorsReport {
     }
 
     public Map<Color, Integer> report(List<Product> products) {
+        if(products == null) throw new IllegalArgumentException("Products não pode ser igual a null");
+
         for (Product p: products) {
             if (this.colorCount.containsKey(p.getColor())) {
                 int novaQtdDeProdutosCor = this.colorCount.get(p.getColor()) + 1;

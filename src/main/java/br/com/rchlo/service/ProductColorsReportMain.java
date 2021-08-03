@@ -5,9 +5,7 @@ import br.com.rchlo.domain.Product;
 import br.com.rchlo.domain.Size;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class ProductColorsReportMain {
