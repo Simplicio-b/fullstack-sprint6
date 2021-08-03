@@ -16,7 +16,7 @@ public class ProductSizesReport {
         mapSizeListProduct.put(Size.EXTRA_LARGE, new ArrayList<Product>());
     }
 
-    public void report(List<Product> products) {
+    public Map<Size, List<Product>> report(List<Product> products) {
        if(products == null) throw new IllegalArgumentException("Error products não pode ser null");
 
        products.forEach(p -> {
@@ -27,8 +27,10 @@ public class ProductSizesReport {
                list.add(p);
                this.mapSizeListProduct.put(t, list);
            });
-
        });
+
+       return this.mapSizeListProduct;
+
     }
 
     public void all() {
