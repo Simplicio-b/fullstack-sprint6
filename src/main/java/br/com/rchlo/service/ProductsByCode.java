@@ -10,9 +10,11 @@ public class ProductsByCode {
     public List<Product> filter(Long code, List<Product> products) {
         validateParameters(code, products);
 
+
         List<Product> filteredProducts = new ArrayList<>();
         for (Product product : products) {
-            if (code == product.getCode()) {
+
+            if (product.getCode().equals(code)) {
                 filteredProducts.add(product);
             }
         }
