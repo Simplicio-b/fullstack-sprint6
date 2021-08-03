@@ -8,20 +8,31 @@ import java.util.List;
 
 public class ProductsByEffectivePriceRange {
 
-    public List<Product> m(BigDecimal mi, BigDecimal ma, List<Product> lis) {
-        if (mi == null) throw new IllegalArgumentException("minimum price should not be null");
-        if (ma == null) throw new IllegalArgumentException("maximum price should not be null");
-        if (lis == null) throw new IllegalArgumentException("product list should not be null");
+    private List<Product> resultList = new ArrayList<>();
 
-        List<Product> lisFi = new ArrayList<>();
+    public List<Product> filterProductList(BigDecimal minPrice, BigDecimal maxPrice, List<Product> productList) {
 
-        for (Product x : lis) {
-            if ((x.getDiscount() != null ? x.getPrice().subtract(x.getDiscount()) : x.getPrice()).compareTo(mi) >= 0 && (x.getDiscount() != null ? x.getPrice().subtract(x.getDiscount()) : x.getPrice()).compareTo(ma) <= 0) {
-                lisFi.add(x);
+        if (minPrice == null) throw new IllegalArgumentException("minimum price should not be null");
+        if (maxPrice == null) throw new IllegalArgumentException("maximum price should not be null");
+        if (productList == null) throw new IllegalArgumentException("product list should not be null");
+
+        for (Product product : productList) {
+            BigDecimal price = this.getPriceFinal(product);
+
+            if (price.compareTo(minPrice) >= 0 && price.compareTo(maxPrice) <= 0) {
+                this.resultList.add(product);
             }
         }
 
-        return lisFi;
+        return this.resultList;
     }
+
+    private BigDecimal getPriceFinal(Product product) {
+        BigDecimal discont = product.getDiscount();
+        BigDecimal price = product.getPrice();
+
+        return discont != null ? price.subtract(discont) : price;
+    }
+
 
 }
