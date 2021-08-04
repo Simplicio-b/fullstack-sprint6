@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Set;
 
-public class Product {
+public class Product implements Comparable<Product> {
 
     private final Long code;
     private final String name;
@@ -106,5 +106,16 @@ public class Product {
                 ", image='" + image + '\'' +
                 ", availableSizes=" + availableSizes +
                 '}';
+    }
+
+
+    @Override
+    public int compareTo(Product outroProduct) {
+        if (this.getCode() > outroProduct.getCode()) {
+            return 1;
+        } if (this.getCode() < outroProduct.getCode()) {
+            return -1;
+        }
+        return 0;
     }
 }
