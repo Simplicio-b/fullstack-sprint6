@@ -5,7 +5,6 @@ import br.com.rchlo.domain.PaymentStatus;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
 
 public class PaymentStatistics {
 
