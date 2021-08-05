@@ -9,19 +9,18 @@ import java.util.*;
 public class ProductsSortedByCodeMain {
 
     public static void main(String[] args) {
-        List<Product> products = ProductRepository.all();
-        ProductsSortedByCode psbc = new ProductsSortedByCode();
+        ProductsSortedByCode sortedByCode = new ProductsSortedByCode();
 
-        products.forEach(p -> {
-            System.out.print(p.getCode() + " - ");
-            System.out.println(p);
+        ProductRepository.all().forEach(product -> {
+            System.out.print(product.getCode() + " - ");
+            System.out.println(product);
         });
 
         System.out.println("\n =============================*============*=============== \n");
 
-        psbc.listOrdenada(products).forEach(e -> {
-            System.out.print(e.getCode() + " - ");
-            System.out.println(e);
+        sortedByCode.listOrdenada(ProductRepository.all()).forEach(product -> {
+            System.out.print(product.getCode() + " - ");
+            System.out.println(product);
         });
 
     }

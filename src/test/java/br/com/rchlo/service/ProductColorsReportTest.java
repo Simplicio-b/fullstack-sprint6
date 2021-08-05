@@ -16,39 +16,33 @@ public class ProductColorsReportTest {
 
     @Test
     public void reportShouldReturnExeptionIfProfuctsNull() {
-        ProductColorsReport pcr = new ProductColorsReport();
-
-        List<Product> products = List.of(
-                aTShirt(),
-                aJacket()
-        );
+        ProductColorsReport productColorReport = new ProductColorsReport();
 
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () ->  pcr.report(null)
+                () ->  productColorReport.report(null)
         );
     }
 
     @Test
     public void reportMustReturnMapWithQuantityPartsPerColor() {
-        ProductColorsReport pcr = new ProductColorsReport();
+        ProductColorsReport productColorReport = new ProductColorsReport();
         List<Product> products = List.of(
                 aTShirt(),
                 aJacket()
         );
 
-        Map<Color, Integer> mapProductsColor = pcr.report(products);
-        Map<Color, Integer> mapProdctsColorExpect = new HashMap<>();
+        Map<Color, Integer> productColor = productColorReport.report(products);
+        Map<Color, Integer> productColorExpect = mockMapColor();
 
-        mapProdctsColorExpect.put(Color.BLUE, 1);
-        mapProdctsColorExpect.put(Color.GRAY, 0);
-        mapProdctsColorExpect.put(Color.GREEN, 0);
-        mapProdctsColorExpect.put(Color.PINK, 0);
-        mapProdctsColorExpect.put(Color.RED, 0);
-        mapProdctsColorExpect.put(Color.WHITE, 1);
+        Assertions.assertEquals(productColorExpect.get(Color.BLUE), productColor.get(Color.BLUE));
+        Assertions.assertEquals(productColorExpect.get(Color.GRAY), productColor.get(Color.GRAY));
+        Assertions.assertEquals(productColorExpect.get(Color.GREEN), productColor.get(Color.GREEN));
+        Assertions.assertEquals(productColorExpect.get(Color.PINK), productColor.get(Color.PINK));
+        Assertions.assertEquals(productColorExpect.get(Color.RED), productColor.get(Color.RED));
+        Assertions.assertEquals(productColorExpect.get(Color.WHITE), productColor.get(Color.WHITE));
 
-
-        Assertions.assertEquals(mapProdctsColorExpect, mapProductsColor);
+        Assertions.assertTrue(productColorExpect.equals(productColor));
     }
 
     public Product aTShirt() {
@@ -77,5 +71,18 @@ public class ProductColorsReportTest {
                 147,
                 "https://static.riachuelo.com.br/RCHLO/13834193003/portrait/3107b7473df334c6ff206cd78d16dec86d7dfe9a.jpg",
                 Set.of(Size.LARGE, Size.EXTRA_LARGE));
+    }
+
+    public Map<Color, Integer> mockMapColor() {
+        Map<Color, Integer> productColorExpect = new HashMap<>();
+
+        productColorExpect.put(Color.BLUE, 1);
+        productColorExpect.put(Color.GRAY, 0);
+        productColorExpect.put(Color.GREEN, 0);
+        productColorExpect.put(Color.PINK, 0);
+        productColorExpect.put(Color.RED, 0);
+        productColorExpect.put(Color.WHITE, 1);
+
+        return productColorExpect;
     }
 }

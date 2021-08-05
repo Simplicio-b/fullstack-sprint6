@@ -12,28 +12,34 @@ import java.util.*;
 public class ProductSizesReportTest {
 
     @Test
-    public void reportDeveRetornarUmaExecaoCasoParametroSejaNull() {
-        ProductSizesReport psr = new ProductSizesReport();
+    public void mustReturnExceptionNullParameters() {
+        ProductSizesReport productReportSize = new ProductSizesReport();
 
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> psr.report(null)
+                () -> productReportSize.report(null)
         );
     }
 
     @Test
-    public void reportDeveRetornarUmMapQaundoForPassadoUmaListaPorParametro() {
+    public void shouldReturnProductMapBySize() {
         List<Product> products = List.of(this.aTShirt(), this.aJacket());
-        ProductSizesReport psr = new ProductSizesReport();
+        ProductSizesReport productReportSize = new ProductSizesReport();
 
-        Map<Size, List<Product>> mapSizeListProduct = psr.report(products);
-        Map<Size, List<Product>> mapSizeListProductExpect = new HashMap<>();
+        Map<Size, List<Product>> productList = productReportSize.report(products);
+        Map<Size, List<Product>> productListExpected = new HashMap<>();
 
-        mapSizeListProductExpect.put(Size.SMALL, List.of(aTShirt()));
-        mapSizeListProductExpect.put(Size.MEDIUM, List.of(aTShirt()));
-        mapSizeListProductExpect.put(Size.LARGE, List.of(aJacket()));
-        mapSizeListProductExpect.put(Size.EXTRA_LARGE, List.of(aJacket()));
+        productListExpected.put(Size.SMALL, List.of(aTShirt()));
+        productListExpected.put(Size.MEDIUM, List.of(aTShirt()));
+        productListExpected.put(Size.LARGE, List.of(aJacket()));
+        productListExpected.put(Size.EXTRA_LARGE, List.of(aJacket()));
 
-        Assertions.assertEquals(mapSizeListProductExpect, mapSizeListProduct);
+
+        Assertions.assertEquals(productListExpected.get(Size.SMALL).size(), productList.get(Size.SMALL).size());
+        Assertions.assertEquals(productListExpected.get(Size.MEDIUM).size(), productList.get(Size.MEDIUM).size());
+        Assertions.assertEquals(productListExpected.get(Size.LARGE).size(), productList.get(Size.LARGE).size());
+        Assertions.assertEquals(productListExpected.get(Size.EXTRA_LARGE).size(), productList.get(Size.EXTRA_LARGE).size());
+
+        Assertions.assertTrue(productListExpected.equals(productList));
     }
 
 

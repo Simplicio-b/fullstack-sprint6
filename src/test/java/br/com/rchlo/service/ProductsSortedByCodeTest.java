@@ -14,14 +14,14 @@ import java.util.Set;
 public class ProductsSortedByCodeTest {
 
     @Test
-    public void listaOrdenaDeveRetornarExecaoCasoOParametroSejaNull() {
+    public void mustReturnExeptionParameterNull() {
         ProductsSortedByCode psbc = new ProductsSortedByCode();
 
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> psbc.listOrdenada(null));
     }
 
-    @Test void listaOrdenaDeveOrdenarPorIdUmaListaDeProducts() {
+    @Test void mustOrderListProductsByCode() {
         List<Product> products = List.of(
                 this.aJacket(),
                 this.aTShirt5(),

@@ -39,7 +39,7 @@ class PaymentStatisticsCalculatorTest {
     }
 
     @Test
-    void deveConsiderarQuantidadeDePagamentoPorStatus() {
+    void mustConsiderAmoutPaymentByStatus() {
         PaymentStatistics paymentStatistics = paymentStatisticsCalculator.calculate();
 
         Map<PaymentStatus, Long> quantityOfPaymentsByStatus = paymentStatistics.getQuantityOfPaymentsByStatus();

@@ -10,30 +10,28 @@ public class ProductSizesReport {
     private Map<Size, List<Product>> mapSizeListProduct = new HashMap<Size, List<Product>>();
 
     public ProductSizesReport() {
-        mapSizeListProduct.put(Size.SMALL, new ArrayList<Product>());
-        mapSizeListProduct.put(Size.MEDIUM, new ArrayList<Product>());
-        mapSizeListProduct.put(Size.LARGE, new ArrayList<Product>());
-        mapSizeListProduct.put(Size.EXTRA_LARGE, new ArrayList<Product>());
+        mapSizeListProduct.put(Size.SMALL, new ArrayList<>());
+        mapSizeListProduct.put(Size.MEDIUM, new ArrayList<>());
+        mapSizeListProduct.put(Size.LARGE, new ArrayList<>());
+        mapSizeListProduct.put(Size.EXTRA_LARGE, new ArrayList<>());
     }
 
     public Map<Size, List<Product>> report(List<Product> products) {
        if(products == null) throw new IllegalArgumentException("Error products não pode ser null");
 
-       products.forEach(p -> {
-           Set<Size> tamanhos = p.getAvailableSizes();
+       products.forEach(product -> {
+           product.getAvailableSizes().forEach(size -> {
+               List<Product> list = this.mapSizeListProduct.get(size);
+               list.add(product);
 
-           tamanhos.forEach(t -> {
-               List<Product> list = this.mapSizeListProduct.get(t);
-               list.add(p);
-               this.mapSizeListProduct.put(t, list);
+               this.mapSizeListProduct.put(size, list);
            });
        });
 
        return this.mapSizeListProduct;
-
     }
 
-    public void all() {
+    public void showReportAll() {
         this.templateAll(Size.SMALL);
         this.templateAll(Size.MEDIUM);
         this.templateAll(Size.LARGE);
