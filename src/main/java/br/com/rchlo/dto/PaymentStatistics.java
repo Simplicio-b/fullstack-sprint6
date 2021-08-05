@@ -5,14 +5,16 @@ import br.com.rchlo.domain.PaymentStatus;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 public class PaymentStatistics {
 
     private BigDecimal maximumAmountOfConfirmedPayment;
-    private HashMap<PaymentStatus, Long> paymentStatus;
+    private Map<PaymentStatus, Long> paymentsStatitics;
 
-    public PaymentStatistics(BigDecimal maximumAmountOfConfirmedPayment) {
+    public PaymentStatistics(BigDecimal maximumAmountOfConfirmedPayment, Map<PaymentStatus, Long> map) {
         this.maximumAmountOfConfirmedPayment = maximumAmountOfConfirmedPayment;
+        this.paymentsStatitics = map;
     }
 
     public BigDecimal getMaximumAmountOfConfirmedPayment() {
@@ -20,17 +22,8 @@ public class PaymentStatistics {
     }
 
     public Map<PaymentStatus, Long> getQuantityOfPaymentsByStatus() {
-        return paymentStatus;
+        return this.paymentsStatitics;
     }
 
-    public void addPaymentForStatus(PaymentStatus status) {
-        Long quantity = this.paymentStatus.get(status);
-        if (quantity == null) {
-            quantity = 1L;
-        } else {
-            quantity++;
-        }
-        this.paymentStatus.put(status, quantity);
-    }
 
 }

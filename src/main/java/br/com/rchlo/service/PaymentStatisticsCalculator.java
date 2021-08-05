@@ -22,18 +22,28 @@ public class PaymentStatisticsCalculator {
         List<Payment> allPayments = paymentRepository.all(); // será que essa é a melhor maneira de fazer isso?
 
         BigDecimal maximumConfirmedPayment = BigDecimal.ZERO;
+
         for (Payment payment : allPayments) {
             if (PaymentStatus.CONFIRMED.equals(payment.getStatus()) && maximumConfirmedPayment.compareTo(payment.getAmount()) < 0) {
                 maximumConfirmedPayment = payment.getAmount();
             }
         }
 
-        PaymentStatistics paymentStatistics = new PaymentStatistics(maximumConfirmedPayment);
+        Map<PaymentStatus, Long> map = new HashMap<>();
+
         for (Payment payment : allPayments) {
-            PaymentStatus status = payment.getStatus();
-            paymentStatistics.addPaymentForStatus(status);
+            Long quantiny = map.get(payment.getStatus());
+
+            if(quantiny == null) {
+                quantiny = 1L;
+            }else {
+                quantiny++;
+            }
+
+            map.put(payment.getStatus(), quantiny);
         }
 
+        PaymentStatistics paymentStatistics = new PaymentStatistics(maximumConfirmedPayment, map);
         return paymentStatistics;
     }
 }

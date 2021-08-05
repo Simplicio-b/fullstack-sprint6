@@ -26,6 +26,31 @@ class PaymentStatisticsCalculatorTest {
 
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.openMocks(this);
+        Mockito.when(paymentRepository.all()).thenReturn(payments());
+        paymentStatisticsCalculator = new PaymentStatisticsCalculator(paymentRepository);
+    }
+
+    @Test
+    void shouldCalculateMaximumAmountOfConfirmedPayment() {
+        PaymentStatistics paymentStatistics = paymentStatisticsCalculator.calculate();
+        BigDecimal maximumAmountOfConfirmedPayment = paymentStatistics.getMaximumAmountOfConfirmedPayment();
+        Assertions.assertThat(maximumAmountOfConfirmedPayment).isEqualTo(new BigDecimal("200.00"));
+    }
+
+    @Test
+    void deveConsiderarQuantidadeDePagamentoPorStatus() {
+        PaymentStatistics paymentStatistics = paymentStatisticsCalculator.calculate();
+
+        Map<PaymentStatus, Long> quantityOfPaymentsByStatus = paymentStatistics.getQuantityOfPaymentsByStatus();
+
+        Assertions.assertThat(quantityOfPaymentsByStatus)
+                .containsEntry(PaymentStatus.CREATED, 2L)
+                .containsEntry(PaymentStatus.CONFIRMED, 1L)
+                .containsEntry(PaymentStatus.CANCELED, 1L);
+    }
+
+    public List<Payment> payments() {
         List<Payment> allPayments = new ArrayList<>();
 
         allPayments.add(
@@ -60,31 +85,7 @@ class PaymentStatisticsCalculatorTest {
                 )
         );
 
-
-        MockitoAnnotations.openMocks(this);
-        Mockito.when(paymentRepository.all()).thenReturn(allPayments);
-        paymentStatisticsCalculator = new PaymentStatisticsCalculator(paymentRepository);
-    }
-
-    @Test
-    void shouldCalculateMaximumAmountOfConfirmedPayment() {
-        PaymentStatistics paymentStatistics = paymentStatisticsCalculator.calculate();
-        BigDecimal maximumAmountOfConfirmedPayment = paymentStatistics.getMaximumAmountOfConfirmedPayment();
-        Assertions.assertThat(maximumAmountOfConfirmedPayment).isEqualTo(new BigDecimal("200.00"));
-    }
-
-    @Test
-    void deveConsiderarQuantidadeDePagamentoPorStatus() {
-        PaymentStatistics paymentStatistics = paymentStatisticsCalculator.calculate();
-
-        Map<PaymentStatus, Long> quantityOfPaymentsByStatus = paymentStatistics.getQuantityOfPaymentsByStatus();
-
-        System.out.println(quantityOfPaymentsByStatus);
-
-        Assertions.assertThat(quantityOfPaymentsByStatus)
-                .containsEntry(PaymentStatus.CREATED, 2L)
-                .containsEntry(PaymentStatus.CONFIRMED, 1L)
-                .containsEntry(PaymentStatus.CANCELED, 1L);
+        return allPayments;
     }
 
 }
