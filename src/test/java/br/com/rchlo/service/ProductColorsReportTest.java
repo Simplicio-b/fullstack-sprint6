@@ -15,7 +15,7 @@ import java.util.Set;
 public class ProductColorsReportTest {
 
     @Test
-    public void reportDeveRetornarUmaExecaoCasoProductsSejaNull() {
+    public void reportShouldReturnExeptionIfProfuctsNull() {
         ProductColorsReport pcr = new ProductColorsReport();
 
         List<Product> products = List.of(
@@ -30,7 +30,7 @@ public class ProductColorsReportTest {
     }
 
     @Test
-    public void reportDeveRetornarMapComAQtdePecasPorCor() {
+    public void reportMustReturnMapWithQuantityPartsPerColor() {
         ProductColorsReport pcr = new ProductColorsReport();
         List<Product> products = List.of(
                 aTShirt(),

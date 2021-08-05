@@ -1,7 +1,8 @@
-package br.com.rchlo.service;
+package br.com.rchlo.main;
 
 import br.com.rchlo.data.ProductRepository;
 import br.com.rchlo.domain.Product;
+import br.com.rchlo.service.ProductsSortedByCode;
 
 import java.util.*;
 
@@ -22,8 +23,6 @@ public class ProductsSortedByCodeMain {
             System.out.print(e.getCode() + " - ");
             System.out.println(e);
         });
-
-
 
     }
 

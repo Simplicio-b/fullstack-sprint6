@@ -11,7 +11,6 @@ import java.util.List;
 public class ProductsByEffectivePriceRangeMain {
 
     public static void main(String[] args) {
-
         var productsByEffectivePriceRangeFilter = new ProductsByEffectivePriceRange();
 
         List<Product> allProducts = ProductRepository.all();
@@ -21,8 +20,8 @@ public class ProductsByEffectivePriceRangeMain {
 
         List<Product> filteredProducts = productsByEffectivePriceRangeFilter.filterProductList(minimumPrice, maximumPrice, allProducts);
 
-        filteredProducts.forEach(p -> {
-            System.out.printf("%s - %s - R$ %.2f %n", p.getCode(), p.getName(), p.getPrice());
+        filteredProducts.forEach(product -> {
+            System.out.printf("%s - %s - R$ %.2f %n", product.getCode(), product.getName(), product.getPrice());
         });
 
     }

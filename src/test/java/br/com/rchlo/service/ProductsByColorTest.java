@@ -5,20 +5,19 @@ import br.com.rchlo.domain.Product;
 import br.com.rchlo.domain.Size;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ProductsByColorTest {
 
     @Test
-    public void filtroDeveFuncionarEmListaComMaisDeUmaCorDesejada() {
-        ProductsByColor pc = new ProductsByColor();
+    public void filterShouldWorkOnListWithMoreThanOneColor() {
+        ProductsByColor productsColor = new ProductsByColor();
 
         List<Product> products = List.of(
                 this.aJacket(),
@@ -27,42 +26,40 @@ public class ProductsByColorTest {
                 this.aTShirt2()
         );
 
-        List<Product> res = pc.filter(Color.WHITE, products);
+        List<Product> filtredProducts = productsColor.filter(Color.WHITE, products);
 
-        assertEquals(2, res.size());
-
+        assertEquals(2, filtredProducts.size());
+        assertEquals(Color.WHITE, filtredProducts.get(0).getColor());
+        assertEquals(Color.WHITE, filtredProducts.get(1).getColor());
     }
 
     @Test
-    public void filtroDeveRetornarUmaListaVaziaCasoSejaPassadoListaVazia() {
-        ProductsByColor pc = new ProductsByColor();
-        List<Product> products = List.of();
+    public void filterMustReturnEmptyListIfEmptyListPassed() {
+        ProductsByColor productColor = new ProductsByColor();
+        List<Product> productList = List.of();
+        List<Product> resultFiltredProducts = productColor.filter(Color.WHITE, productList);
 
-        List<Product> res = pc.filter(Color.WHITE, products);
-
-        assertEquals(true, res.isEmpty());
-
+        assertTrue(resultFiltredProducts.isEmpty());
     }
 
     @Test
-    public void filtroDeveLancarUmaExecaoCasoColorSejaNull() {
-        ProductsByColor pc = new ProductsByColor();
-        List<Product> products = List.of();
+    public void filterMustThrowAnExceptionIfParametersIsNull() {
+        ProductsByColor productColor = new ProductsByColor();
+        List<Product> productList = List.of();
 
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> pc.filter(null, products)
+                () -> productColor.filter(null, productList)
         );
-    }
-
-    @Test
-    public void filtroDeveLancarUmaExecaoCasoListaDeProdutosSejaNull() {
-        ProductsByColor pc = new ProductsByColor();
-        List<Product> products = List.of();
 
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> pc.filter(Color.WHITE, null)
+                () -> productColor.filter(Color.WHITE, null)
+        );
+
+        Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> productColor.filter(null, null)
         );
     }
 

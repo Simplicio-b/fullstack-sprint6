@@ -76,6 +76,13 @@ public class Product implements Comparable<Product> {
         return availableSizes;
     }
 
+    public BigDecimal getFinalPrice() {
+        return this.getDiscount() != null ?
+                this.getPrice().subtract(this.getDiscount())
+                :
+                this.getPrice();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

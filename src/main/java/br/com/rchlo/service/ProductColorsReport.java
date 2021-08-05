@@ -23,21 +23,16 @@ public class ProductColorsReport {
     public Map<Color, Integer> report(List<Product> products) {
         if(products == null) throw new IllegalArgumentException("Products não pode ser igual a null");
 
-        for (Product p: products) {
-            if (this.colorCount.containsKey(p.getColor())) {
-                int novaQtdDeProdutosCor = this.colorCount.get(p.getColor()) + 1;
+        products.forEach(product -> {
+            if (this.colorCount.containsKey(product.getColor())) {
+                int quantityProductColor = this.colorCount.get(product.getColor()) + 1;
                 this.colorCount.put(
-                        p.getColor(),
-                        novaQtdDeProdutosCor
+                        product.getColor(),
+                        quantityProductColor
                 );
             }
-        }
+        });
 
         return this.colorCount;
     }
-
-    public void all() {
-        System.out.println(this.colorCount);
-    }
-
 }

@@ -1,8 +1,9 @@
-package br.com.rchlo.service;
+package br.com.rchlo.main;
 
 import br.com.rchlo.domain.Color;
 import br.com.rchlo.domain.Product;
 import br.com.rchlo.domain.Size;
+import br.com.rchlo.service.ProductSizesReport;
 
 import java.math.BigDecimal;
 import java.util.*;
